@@ -1,8 +1,8 @@
 #include <WiFiNINA.h> // this is a library that helps us connect to the internet!
 
 // WiFi credentials.
-const char* WIFI_SSID = "ssid";
-const char* WIFI_PASS = "pass";
+const char* WIFI_SSID = "los-devices";
+const char* WIFI_PASS = "foxisawesome";
 
 WiFiSSLClient client;
 
@@ -10,9 +10,11 @@ WiFiSSLClient client;
 int    HTTP_PORT   = 443;
 String HTTP_METHOD = "POST";
 char   HOST_NAME[] = "virtual-lights.onlosant.com";
+String PATH_NAME   = "/";
 
-// edit this
-String message = "{ \"name\": \"Heath\", \"message\": \"Hello, World!\" }";
+// Edit these values to change the Name and Message that you send to the Light Wall!
+String NAME = "heath";
+String MESSAGE = "Don't Panic!";
 
 /*
  * const means that these values never change.
@@ -58,21 +60,28 @@ void connect() {
 
 }
 
+String postMessage = String("{ \"name\": ") + String("\"") + NAME + String("\"")  + String(", \"message\":") + String("\"")+ MESSAGE + String("\"") + String(" }");
+
 void makeHTTPRequest() {
+  Serial.println("Connecting to Server...");
   if(client.connect(HOST_NAME, HTTP_PORT)) {
     // if connected:
     Serial.println("Connected to server");
     // make a HTTP request:
     // send HTTP header
-    client.println(HTTP_METHOD + " HTTP/1.1");
+    client.println(HTTP_METHOD + " " + PATH_NAME + " HTTP/1.1");
     client.println("Host: " + String(HOST_NAME));
+    client.println("Content-Length: " + String(postMessage.length(), DEC));
+    client.println("Content-Type: application/json");
     client.println("Connection: close");
     client.println(); // end HTTP header
 
     // send HTTP body
-    client.println(message);
+    Serial.println(postMessage);
+    client.println(postMessage);
 
-    while(client.connected()) {
+    long time = millis();
+    while(client.connected() && millis() - time < 5000) {
       if(client.available()){
         // read an incoming byte from the server and print it to serial monitor:
         char c = client.read();
@@ -151,19 +160,19 @@ void loop() {
 
       /* If the button state is HIGH... */
       if (currentButtonState == HIGH) {
-
-        makeHTTPRequest();
         /*
          * ...then toggle the LED state. Using a ! tells the program
          * that it wants to set the variable to the opposite of whatever
          * it was set to before.
          */
+        Serial.println("Button Pressed!");
         ledState = !ledState;
+        digitalWrite(LED_PIN, ledState);
+        makeHTTPRequest();
       }
     }
   }
 
   /* Write the determined LED state to the pin. */
-  digitalWrite(LED_PIN, ledState);
   previousButtonState = buttonStateInThisLoop;
 }
