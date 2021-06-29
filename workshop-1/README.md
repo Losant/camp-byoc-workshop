@@ -9,12 +9,13 @@ TODO - Wiring Diagram
 
 Wiring steps:
 
-snap in arduino from 14A - 30A
+snap the arduino onto the breadboard at 14A - 30A
 
-grab a male to male wire put that in input 1 to 2A
+grab any jumper and put that one in GND and then a negative power rail next to it
 
-grab a male to male wire put that in GND 4I
+grab another jumper and put one side in the arduino 1 input and the other side bends into C11
 
-grab a resistor wire and put one end in 2C and 2H (it's okay they are suppose to bend)
+resistor one in negative power rail and the other into B10
 
-grab your LED and put one end in 2J and the other in 4J
+grab your LED and put one end into D11 and the other into D10.
+
