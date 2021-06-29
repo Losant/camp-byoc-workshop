@@ -7,6 +7,7 @@ void setup() {
   // Configure GPIO 1 as a digital output.
   // https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/
   pinMode(1, OUTPUT);
+//  pinMode(LED_BUILTIN, OUTPUT);
 
 }
 
@@ -22,8 +23,10 @@ void loop() {
   // https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/
 
   digitalWrite(1, HIGH);
+//  digitalWrite(LED_BUILTIN, HIGH);
   delay(1000);
   digitalWrite(1, LOW);
+//  digitalWrite(LED_BUILTIN, LOW);
   delay(1000);
 
 }
