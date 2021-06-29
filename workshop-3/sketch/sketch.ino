@@ -4,13 +4,12 @@
 const char* WIFI_SSID = "SSID";
 const char* WIFI_PASS = "Password";
 
-WiFiSSLClient client;
-
+WiFiClient client;
 // information for HTTP Request
-int    HTTP_PORT   = 443;
+int    HTTP_PORT   = 80;
 String HTTP_METHOD = "POST";
-char   HOST_NAME[] = "virtual-lights.onlosant.com";
-String PATH_NAME   = "/";
+char   HOST_NAME[] = "triggers.losant.com";
+String PATH_NAME   = "/webhooks/bEaAdLGfpr97Iw8O4r1vWx2n_OUxoOvWmTrvM2mL";
 
 // Edit these values to change the Name and Message that you send to the Light Wall!
 char NAME[] = "your-name-here";
